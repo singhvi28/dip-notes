@@ -94,7 +94,7 @@ Visible light is just a tiny sliver of the much broader **Electromagnetic (EM) S
 *   **Wavelength ($\lambda$)**: Measured in meters, microns ($\mu m$), or nanometers (nm).
 *   **Frequency ($\nu$)**: Measured in Hertz (Hz).
 *   **Relationship**: Wavelength and frequency are inversely related by the speed of light ($c \approx 2.998 \times 10^8 \text{ m/s}$):
-$$ \lambda = \frac{c}{\nu} $$
+$  \lambda = \frac{c}{\nu}  $
 *   **Energy ($E$)**: The energy of a photon is proportional to its frequency: $E = h\nu$, where $h$ is Planck's constant.
 
 ### The Visible Spectrum
@@ -121,7 +121,7 @@ How do we turn EM energy into a digital image? It requires a physical process of
 
 ### Image Formation Model
 We represent images as a two-dimensional function $f(x,y)$, where the value at any spatial coordinate is the positive scalar **intensity**.
-$$ f(x,y) = i(x,y) \cdot r(x,y) $$
+$  f(x,y) = i(x,y) \cdot r(x,y)  $
 *   **Illumination ($i$)**: The range is $0 < i(x,y) < \infty$.
 *   **Reflectance ($r$)**: The range is $0 < r(x,y) < 1$. A value of 0 indicates total absorption (black), while 1 indicates total reflectance.
     *   *Examples*: Black velvet $\approx 0.01$, Stainless steel $\approx 0.65$, Snow $\approx 0.93$.
@@ -160,20 +160,20 @@ After sampling and quantization, the image is represented as a discrete 2-D arra
 
 ### Matrix Representation
 For computational efficiency, we write the image as a matrix:
-$$
+$ 
 f(x,y) = \begin{bmatrix}
 f(0,0) & f(0,1) & \cdots & f(0,N-1) \\
 f(1,0) & f(1,1) & \cdots & f(1,N-1) \\
 \vdots & \vdots & \ddots & \vdots \\
 f(M-1,0) & f(M-1,1) & \cdots & f(M-1,N-1)
 \end{bmatrix}
-$$
+ $
 
 ### Intensity Levels and Storage
 *   The number of discrete intensity levels, $L$, is typically a power of 2: $L = 2^k$.
 *   **Dynamic Range**: The ratio of the maximum to minimum detectable intensity. Low dynamic range causes a "washed-out" look.
 *   **Storage Requirements**: The number of bits ($b$) to store an image is:
-$$ b = M \times N \times k $$
+$  b = M \times N \times k  $
     *   An image with $2^8 = 256$ intensity values is called an **8-bit image**.
 
 ![Storage Bits](assets/Storage%20bits%20for%20Various%20Values%20of%20N%20and%20K.png)
@@ -226,11 +226,11 @@ A **distance function** is a function of two points, \( p \) and \( q \), in spa
 ### Distance Measures
 For pixels $p(x,y)$ and $q(s,t)$:
 *   **Euclidean Distance ($D_e$)**: The "straight-line" distance (circular radius).
-$$ D_e(p,q) = \sqrt{(x-s)^2 + (y-t)^2} $$
+$  D_e(p,q) = \sqrt{(x-s)^2 + (y-t)^2}  $
 *   **City-Block (Manhattan) Distance ($D_4$)**: Measured along horizontal and vertical paths (diamond shape).
-$$ D_4(p,q) = |x-s| + |y-t| $$
+$  D_4(p,q) = |x-s| + |y-t|  $
 *   **Chessboard Distance ($D_8$)**: The maximum difference between coordinates (square shape).
-$$ D_8(p,q) = \max(|x-s|, |y-t|) $$
+$  D_8(p,q) = \max(|x-s|, |y-t|)  $
 
 ### Basic Definitions
 *   **Path**: A sequence of distinct pixels where each consecutive pair is adjacent.
@@ -392,7 +392,7 @@ A pixel's new value is determined by its neighboring pixels using a **Filter** (
 
 ### Linear Spatial Filtering
 A weighted average of the neighborhood (sum-of-products):
-$$ g(x,y) = \sum_{s=-a}^{a} \sum_{t=-b}^{b} w(s,t)f(x+s, y+t) $$
+$  g(x,y) = \sum_{s=-a}^{a} \sum_{t=-b}^{b} w(s,t)f(x+s, y+t)  $
 
 ### Correlation vs. Convolution
 *   **Correlation**: Sliding the mask and calculating the sum of products.
@@ -446,7 +446,7 @@ Sharpening (Highpass) Filters highlight transitions in intensity (edges, noise, 
 An isotropic (rotation invariant) operator.
 *   **Formula**: $\nabla^2 f(x,y) = f(x+1,y) + f(x-1,y) + f(x,y+1) + f(x,y-1) - 4f(x,y)$
 *   **Sharpening**: Subtract (or add) the Laplacian from the original image:
-$$ g(x,y) = f(x,y) + c[\nabla^2 f(x,y)] $$
+$  g(x,y) = f(x,y) + c[\nabla^2 f(x,y)]  $
 
 ### 2. Unsharp Masking and Highboost Filtering
 Sharpening using a blurred mask.
@@ -458,7 +458,7 @@ Sharpening using a blurred mask.
 
 ### 3. The Gradient (First-Order Derivative)
 Points in the direction of the greatest rate of change. We typically use the **Gradient Magnitude**:
-$$ M(x,y) \approx |g_x| + |g_y| $$
+$  M(x,y) \approx |g_x| + |g_y|  $
 *   **Roberts Cross-Gradient**: Uses $2 \times 2$ masks.
 *   **Sobel Operators**: Uses $3 \times 3$ masks (provides smoothing + derivative).
 
@@ -485,7 +485,7 @@ To use FT on computers, continuous signals must be **sampled** at intervals $\De
 ### The Sampling Theorem
 *   **Band-limited Functions**: Fourier transform is zero outside $[-\mu_{max}, \mu_{max}]$.
 *   **The Nyquist Rate**: To perfectly recover a signal, the sampling rate must be more than twice the highest frequency:
-$$ \frac{1}{\Delta T} > 2\mu_{max} $$
+$  \frac{1}{\Delta T} > 2\mu_{max}  $
 
 ### Aliasing
 The consequence of under-sampling (sampling slower than Nyquist rate). High-frequency components "fold over" and appear as lower frequencies, causing artifacts like **Moiré patterns** or jagged edges.
