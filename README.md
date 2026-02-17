@@ -95,7 +95,9 @@ Visible light is just a tiny sliver of the much broader **Electromagnetic (EM) S
 *   **Frequency ($\nu$)**: Measured in Hertz (Hz).
 *   **Relationship**: Wavelength and frequency are inversely related by the speed of light ($c \approx 2.998 \times 10^8 \text{ m/s}$):
     $$ \lambda = \frac{c}{\nu} $$
-*   **Energy ($E$)**: The energy of a photon is proportional to its frequency: $E = h\nu$, where $h$ is Planck's constant.
+*   **Energy ($E$)**: The energy of a photon is proportional to its frequency:
+    $$ E = h\nu $$
+    where $h$ is Planck's constant.
 
 ### The Visible Spectrum
 The portion of the spectrum that humans can actually see spans from approximately **0.43 µm (violet)** to **0.79 µm (red)**.
@@ -192,10 +194,12 @@ Interpolation is the process of using known data to **estimate values at unknown
     *   *Pros*: Simple and fast.
     *   *Cons*: Strong tendency to produce artifacts like "jagged" edges.
 2.  **Bilinear Interpolation**: Uses the **four nearest neighbors** to estimate intensity.
-    *   *Model*: $v(x,y) = ax + by + cxy + d$
+    *   *Model*: 
+        $$ v(x,y) = ax + by + cxy + d $$
     *   *Result*: Much smoother than nearest neighbor.
 3.  **Bicubic Interpolation**: Uses the **16 nearest neighbors**.
-    *   *Model*: $v(x,y) = \sum_{i=0}^3 \sum_{j=0}^3 a_{ij} x^i y^j$
+    *   *Model*: 
+        $$ v(x,y) = \sum_{i=0}^3 \sum_{j=0}^3 a_{ij} x^i y^j $$
     *   *Result*: The standard for high-quality commercial image editing; sharper and smoother than bilinear.
 
 ---
@@ -327,10 +331,12 @@ The simplest spatial domain operations where transformation $T$ depends only on 
 
 1.  **Image Negatives**: Flips the intensity scale ($s = L-1-r$).
     *   **Application**: Enhancing white/gray details embedded in dark regions (e.g., mammograms).
-2.  **Log Transformations**: $s = c \log(1+r)$.
+2.  **Log Transformations**: 
+    $$ s = c \log(1+r) $$
     *   **Function**: Maps a narrow range of low-intensity inputs to a wider set of output levels.
     *   **Application**: Visualizing the **Fourier Transform**, expanding dark pixels to reveal structural detail.
-3.  **Power-Law (Gamma) Transformations**: $s = c r^\gamma$.
+3.  **Power-Law (Gamma) Transformations**: 
+    $$ s = c r^\gamma $$
     *   **$\gamma < 1$**: Expands dark regions, compresses bright regions.
     *   **$\gamma > 1$**: Compresses dark regions, expands bright regions.
     *   **$\gamma = 1$**: Identity transformation.
@@ -376,7 +382,8 @@ Analysis based on the statistical distribution of pixel intensities. A **histogr
 
 ### Techniques
 1.  **Histogram Equalization**: An automatic method to "stretch" the histogram to be uniform.
-    *   **Formula**: $s_k = T(r_k) = (L-1) \sum_{j=0}^{k} p_r(r_j)$
+    *   **Formula**: 
+        $$ s_k = T(r_k) = (L-1) \sum_{j=0}^{k} p_r(r_j) $$
     *   **Result**: Increases dynamic range and contrast, revealing hidden details.
 2.  **Histogram Matching (Specification)**: Modifying an image so its histogram matches a specific specified shape (not necessarily uniform).
 
@@ -438,13 +445,18 @@ Based on ranking pixels in the neighborhood rather than mathematical sums.
 Sharpening (Highpass) Filters highlight transitions in intensity (edges, noise, fine detail) using **spatial differentiation**.
 
 ### The Role of Derivatives
-*   **First Derivative**: $\frac{\partial f}{\partial x} = f(x+1) - f(x)$. Non-zero at the onset of a step/ramp.
-*   **Second Derivative**: $\frac{\partial^2 f}{\partial x^2} = f(x+1) + f(x-1) - 2f(x)$. Non-zero at the start and end of a step/ramp; zero along the ramp.
+*   **First Derivative**: 
+    $$ \frac{\partial f}{\partial x} = f(x+1) - f(x) $$
+    Non-zero at the onset of a step/ramp.
+*   **Second Derivative**: 
+    $$ \frac{\partial^2 f}{\partial x^2} = f(x+1) + f(x-1) - 2f(x) $$
+    Non-zero at the start and end of a step/ramp; zero along the ramp.
 *   **Key**: The second derivative enhances fine detail much better than the first.
 
 ### 1. The Laplacian (Second-Order Derivative)
 An isotropic (rotation invariant) operator.
-*   **Formula**: $\nabla^2 f(x,y) = f(x+1,y) + f(x-1,y) + f(x,y+1) + f(x,y-1) - 4f(x,y)$
+*   **Formula**: 
+    $$ \nabla^2 f(x,y) = f(x+1,y) + f(x-1,y) + f(x,y+1) + f(x,y-1) - 4f(x,y) $$
 *   **Sharpening**: Subtract (or add) the Laplacian from the original image:
     $$ g(x,y) = f(x,y) + c[\nabla^2 f(x,y)] $$
 
