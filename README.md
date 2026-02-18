@@ -236,7 +236,6 @@ $D_8(p,q) = \max(|x-s|, |y-t|)$
 *   **Edge**: A path of pixels that separates two regions with significantly different gray levels.
 
 
----
 
 ---
 
@@ -285,10 +284,34 @@ Image registration is a critical process used to align two or more images of the
 
 ## 12. Vector and Matrix Operations
 
-In many advanced applications, we don't just look at a single pixel value; we treat a pixel as part of a vector.
+Modern image processing often leverages linear algebra by treating image data as vectors and matrices.
 
-*   **RGB and Multispectral Images**: For a standard color image, each pixel is actually a vector of three values: Red, Green, and Blue.
-*   **Vector Formation**: A vector **z** is formed by stacking the corresponding pixel values from the different color components (Component 1 = Red, Component 2 = Green, Component 3 = Blue).
+### 12.1 Vectors: Multispectral and Color Pixels
+In a single-band (grayscale) image, a pixel is a scalar. However, in **multispectral** or **RGB** images, a pixel at spatial location $(x,y)$ is represented as a column vector $\mathbf{z}$ of dimension $n$ (where $n$ is the number of bands):
+
+$$ \mathbf{z} = \begin{bmatrix} z_1 \\ z_2 \\ \vdots \\ z_n \end{bmatrix} $$
+
+For a standard RGB image, $n=3$, where $z_1, z_2, z_3$ correspond to the Red, Green, and Blue intensities, respectively.
+
+### 12.2 Euclidean Distance and Similarity
+Vector norms are used to measure the "distance" or similarity between two pixel vectors. This is critical for **color matching**, **object recognition**, and **segmentation**.
+
+*   **Euclidean Distance ($D_E$)**: To determine how similar a pixel $\mathbf{z}$ is to a reference color vector $\mathbf{a}$:
+    $$ D(\mathbf{z}, \mathbf{a}) = || \mathbf{z} - \mathbf{a} || = \sqrt{(\mathbf{z} - \mathbf{a})^T (\mathbf{z} - \mathbf{a})} = \sqrt{\sum_{i=1}^n (z_i - a_i)^2} $$
+    *   *Application*: All pixels $\mathbf{z}$ where $D(\mathbf{z}, \mathbf{a}) < T$ (a threshold) can be classified as belonging to the object defined by color $\mathbf{a}$.
+
+### 12.3 Linear Transformations
+Pixel vectors can be transformed linearly to new coordinate spaces (e.g., converting RGB to YCbCr components).
+$$ \mathbf{w} = \mathbf{A}(\mathbf{z} - \mathbf{a}) $$
+Where $\mathbf{A}$ is an $n \times n$ matrix and $\mathbf{a}$ is an average vector.
+*   **Principal Component Analysis (PCA)**: Also known as the **Hotelling Transform**, this technique uses the covariance matrix of the pixel vectors to align the data along the directions of maximum variance (eigenvectors). It is widely used for **data compression** and **feature extraction** (e.g., Eigenfaces).
+
+### 12.4 Matrix Operations on Whole Images
+An entire $M \times N$ image can be treated as a matrix $\mathbf{F}$.
+*   **Element-wise Operations**: Standard arithmetic (addition, subtraction) is performed element-by-element (e.g., $\mathbf{A} + \mathbf{B}$).
+*   **Image Transforms (Unitary Transforms)**: Transforms like the Fourier or Discrete Cosine Transform (DCT) can be expressed as matrix multiplication:
+    $$ \mathbf{T} = \mathbf{U} \mathbf{F} \mathbf{V}^T $$
+    Where $\mathbf{U}$ and $\mathbf{V}$ are transformation matrices (containing basis functions). This matrix representation is fundamental to **JPEG compression**.
 
 ---
 
@@ -377,6 +400,54 @@ Analysis based on the statistical distribution of pixel intensities. A **histogr
     *   **Formula**: $s_k = T(r_k) = (L-1) \sum_{j=0}^{k} p_r(r_j)$
     *   **Result**: Increases dynamic range and contrast, revealing hidden details.
 2.  **Histogram Matching (Specification)**: Modifying an image so its histogram matches a specific specified shape (not necessarily uniform).
+
+### Example: Histogram Equalization Problem
+
+**Problem 1**: A 3-bit image ($L=8$) of size $64 \times 64$ pixels ($MN=4096$) has an intensity distribution given in the table below. The goal is to determine its equalized histogram.
+
+**1. Data from Table 3.1**
+
+Based on standard versions of this example, the intensity distribution is:
+
+| $r_k$ | $n_k$ (Number of pixels) | $p_r(r_k) = n_k / MN$ |
+| :--- | :--- | :--- |
+| $r_0 = 0$ | 790 | 0.19 |
+| $r_1 = 1$ | 1023 | 0.25 |
+| $r_2 = 2$ | 850 | 0.21 |
+| $r_3 = 3$ | 656 | 0.16 |
+| $r_4 = 4$ | 329 | 0.08 |
+| $r_5 = 5$ | 245 | 0.06 |
+| $r_6 = 6$ | 122 | 0.03 |
+| $r_7 = 7$ | 81 | 0.02 |
+| **Total** | **4096** | **1.00** |
+
+**2. Calculation Steps**
+
+The transformation function for histogram equalization is given by the formula:
+$$s_k = T(r_k) = (L-1) \sum_{j=0}^{k} p_r(r_j)$$
+
+For a 3-bit image, $L-1 = 7$.
+
+*   **$s_0$**: $7 \times (0.19) = 1.33 \rightarrow \mathbf{1}$
+*   **$s_1$**: $7 \times (0.19 + 0.25) = 7 \times 0.44 = 3.08 \rightarrow \mathbf{3}$
+*   **$s_2$**: $7 \times (0.44 + 0.21) = 7 \times 0.65 = 4.55 \rightarrow \mathbf{5}$
+*   **$s_3$**: $7 \times (0.65 + 0.16) = 7 \times 0.81 = 5.67 \rightarrow \mathbf{6}$
+*   **$s_4$**: $7 \times (0.81 + 0.08) = 7 \times 0.89 = 6.23 \rightarrow \mathbf{6}$
+*   **$s_5$**: $7 \times (0.89 + 0.06) = 7 \times 0.95 = 6.65 \rightarrow \mathbf{7}$
+*   **$s_6$**: $7 \times (0.95 + 0.03) = 7 \times 0.98 = 6.86 \rightarrow \mathbf{7}$
+*   **$s_7$**: $7 \times (0.98 + 0.02) = 7 \times 1.00 = 7.00 \rightarrow \mathbf{7}$
+
+**3. Equalized Histogram Result**
+
+The new intensity levels ($s_k$) are mapped from the old levels ($r_k$). Since some values round to the same integer, we sum their probabilities:
+
+*   **Output Level 1**: $p_s(s_1) = 0.19$
+*   **Output Level 3**: $p_s(s_3) = 0.25$
+*   **Output Level 5**: $p_s(s_5) = 0.21$
+*   **Output Level 6**: $p_s(s_6) = 0.16 + 0.08 = 0.24$
+*   **Output Level 7**: $p_s(s_7) = 0.06 + 0.03 + 0.02 = 0.11$
+
+This transformation spreads the intensities more uniformly across the scale, which is the primary goal of histogram equalization.
 
 ---
 
@@ -488,5 +559,80 @@ $\frac{1}{\Delta T} > 2\mu_{max}$
 ### Aliasing
 The consequence of under-sampling (sampling slower than Nyquist rate). High-frequency components "fold over" and appear as lower frequencies, causing artifacts like **Moiré patterns** or jagged edges.
 
+---
 
+# Histogram Equalization Techniques Whitepaper
 
+Histogram equalization is a technique to automatically improve the contrast in an image. If a photo is too dark or washed out, this technique spreads out the most frequent intensity values, effectively "stretching" the range of the image so that details become clearer.
+
+## 1. The Core Concept: The Transfer Function
+
+To change the brightness of an image, we use a transformation function, $T(r)$. The new intensity level $s_k$ is calculated based on the old intensity level $r_k$ using the Cumulative Distribution Function (CDF):
+
+$$ s_k = T(r_k) = (L-1) \sum_{j=0}^{k} p_r(r_j) $$
+
+Where:
+*   $L-1$: The maximum intensity level. For a 3-bit image, $L=8$, so $L-1 = 7$.
+*   $p_r(r_j)$: The probability of a pixel having intensity $r_j$ (normalized histogram value).
+*   $\sum$: The sum of probabilities from the darkest level up to the current level $k$.
+
+## 2. Calculation Example
+
+Based on the provided data:
+
+### Level 0 ($s_0$)
+Calculation: $s_0 = 7 \times p_r(r_0)$
+Given $p_r(r_0) = 0.19$:
+$s_0 = 7 \times 0.19 = 1.33$
+
+### Level 1 ($s_1$)
+Calculation: $s_1 = 7 \times [p_r(r_0) + p_r(r_1)]$
+Given $p_r(r_1) = 0.25$:
+$s_1 = 7 \times (0.19 + 0.25) = 7 \times 0.44 = 3.08$
+
+## 3. Mapping to New Intensities
+
+Since digital images use integer values, we round the calculated $s_k$ to the nearest integer.
+
+| Original $s_k$ | Rounded New Intensity |
+| :--- | :--- |
+| 1.33 | **1** |
+| 3.08 | **3** |
+| 4.55 | **5** |
+| 5.67 | **6** |
+| 7.00 | **7** |
+
+**Note**: By the final level ($s_7$), the cumulative probability is 1.0, so $7 \times 1.0 = 7$. This ensures the full dynamic range is utilized.
+
+## 4. Pixel Redistribution
+
+The "equalization" occurs because multiple original intensity levels map to the same new level, and some new levels are skipped (creating gaps).
+
+*   **Original Level 0** $\rightarrow$ New Level 1
+*   **Original Level 1** $\rightarrow$ New Level 3
+*   **Original Level 2** $\rightarrow$ New Level 5
+*   **Original Level 3** $\rightarrow$ New Level 6
+*   **Original Levels 5, 6, 7** $\rightarrow$ New Level 7
+
+### New Pixel Counts ($n_s$)
+*   **Level 1**: 790 pixels (from old Level 0)
+*   **Level 3**: 1023 pixels (from old Level 1)
+*   **Level 5**: 850 pixels (from old Level 2)
+*   **Level 7**: $245 + 122 + 81 = 448$ pixels (from old Levels 5, 6, 7)
+
+## 5. Resulting Histogram Characteristics
+
+The equalized histogram exhibits two key characteristics:
+1.  **Spread**: Intensity levels are no longer clumped. Dark values (0, 1, 2) are spread to (1, 3, 5).
+2.  **Gaps**: Because we map a discrete set of integers to another discrete set, some levels (like 0, 2, 4) have zero pixels. This can sometimes cause "grainy" artifacts or false contouring.
+
+## 6. Implementation Notes
+
+### Lookup Table (LUT)
+In practice, this is implemented as a Lookup Table. The mapping is calculated once for the 8 levels, and then applied to every pixel.
+
+### Verification Checkpoints
+When solving manually, ensure:
+1.  **Monotonicity**: $s_k$ should never decrease as $r_k$ increases.
+2.  **Range**: The final $s_{max}$ must equal $L-1$.
+3.  **Pixel Conservation**: The total number of pixels must remain constant.
