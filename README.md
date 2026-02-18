@@ -5,7 +5,7 @@ Notes based on **Chapter 2** of Gonzalez and Woods: *Digital Image Fundamentals*
 
 Digital Image Processing (DIP) involves several stages to convert an image into a form suitable for specific applications. The workflow typically follows this hierarchy:
 
-![Fundamental Steps in Digital Image Processing](assets/fundamental-steps.png)
+<img src="assets/fundamental-steps.png" width="100%" style="height:auto;">
 
 1.  **Image Acquisition**: The first step is capturing the image using a sensor (e.g., a camera). It involves digitizing a continuous signal into a discrete format.
 2.  **Image Enhancement**: The process of manipulating an image so that the result is *more suitable* than the original for a specific application (e.g., adjusting contrast or brightness).
@@ -21,7 +21,7 @@ Digital Image Processing (DIP) involves several stages to convert an image into 
 ### The Image Processing System
 To perform these tasks, a specialized "general purpose" system is required, consisting of:
 
-![The Image Processing System](assets/dip-system.png)
+<img src="assets/dip-system.png" width="100%" style="height:auto;">
 
 *   **Image Sensors**: These sit at the front, interacting with the "Problem Domain" to capture light or energy.
 *   **Specialized Hardware**: Often dedicated boards for high-speed processing.
@@ -145,7 +145,7 @@ The eye is a complex biological camera with several key components:
 *   **Lens**: Unlike a glass camera lens, the human lens is flexible. It changes shape (controlled by ciliary muscles) to focus.
 *   **Retina**: The innermost membrane where the actual "imaging" happens.
 
-![Structure of Human Eye](assets/structure%20of%20human%20eye.jpeg)
+<img src="assets/structure%20of%20human%20eye.jpeg" width="100%" style="height:auto;">
 
 ### Light Receptors
 The retina is covered in two distinct classes of receptors: **Cones** and **Rods**.
@@ -174,7 +174,7 @@ The Human Visual System (HVS) is incredibly flexible. It can adapt to an enormou
 *   **Subjective Brightness**: Our perception of brightness is a **logarithmic function** of the light intensity incident on the eye.
 *   **Simultaneous Range**: At any given adaptation level, the range of intensities the eye can discriminate is actually quite small compared to the total $10^{10}$ range.
 
-![Brightness Adaptation](assets/brightness%20adaptation%20and%20discrimination%20graph.png)
+<img src="assets/brightness%20adaptation%20and%20discrimination%20graph.png" width="100%" style="height:auto;">
 
 #### The Weber Ratio
 To measure how well the eye can detect changes in light, researchers use the **Weber Ratio** ($\Delta I_c / I$), where $\Delta I_c$ is the increment of illumination discriminable 50% of the time against a background $I$.
@@ -189,9 +189,9 @@ Our eyes don't just act like light meters; they interpret data in ways that can 
 *   **Simultaneous Contrast**: A region's perceived brightness depends heavily on its background. A gray square looks much darker against a white background than it does against a black one.
 *   **Optical Illusions**: The eye often "fills in" non-existing information or wrongly perceives geometrical properties (e.g., misjudging parallel lines).
 
-![Mach Band Effect](assets/mach%20band%20effect.png)
-![Simultaneous Contrast](assets/Simultaneous%20Contrast.png)
-![Optical Illusions](assets/Some%20Optical%20Illusions.png)
+<img src="assets/mach%20band%20effect.png" width="100%" style="height:auto;">
+<img src="assets/Simultaneous%20Contrast.png" width="100%" style="height:auto;">
+<img src="assets/Some%20Optical%20Illusions.png" width="100%" style="height:auto;">
 
 ---
 
@@ -212,9 +212,9 @@ The portion of the spectrum that humans can actually see spans from approximatel
 *   **Yellow**: $\sim 600 \text{ nm}$
 *   **Red**: $\sim 700 \text{ nm}$
 
-![EM Spectrum](assets/em%20spectrum.png)
-![Visible Light](assets/visible%20light.png)
-![Applications](assets/visible-infrared.png)
+<img src="assets/em%20spectrum.png" width="100%" style="height:auto;">
+<img src="assets/visible%20light.png" width="100%" style="height:auto;">
+<img src="assets/visible-infrared.png" width="100%" style="height:auto;">
 
 ### Key Light Properties
 *   **Monochromatic (Achromatic) Light**: Light "void of color," having only one attribute: **intensity** or gray level. The range of these measured values is called the **gray scale**.
@@ -241,9 +241,9 @@ Sensors are typically made of silicon (e.g., photodiodes) with filters for selec
 2.  **Sensor Strips**: A line of sensors captures one image line at a time. Common in flatbed scanners and airborne imaging.
 3.  **Sensor Arrays**: The most prevalent arrangement for digital cameras. An entire 2-D grid of sensors captures the scene simultaneously.
 
-![Single Sensor](assets/Image%20Acquisition%20using%20Single%20Sensor.png)
-![Sensor Strips](assets/Image%20Acquisition%20using%20Sensor%20Strips.png)
-![Sensor Arrays](assets/Image%20Acquisition%20using%20Sensor%20Arrays.png)
+<img src="assets/Image%20Acquisition%20using%20Single%20Sensor.png" width="100%" style="height:auto;">
+<img src="assets/Image%20Acquisition%20using%20Sensor%20Strips.png" width="100%" style="height:auto;">
+<img src="assets/Image%20Acquisition%20using%20Sensor%20Arrays.png" width="100%" style="height:auto;">
 
 ### CCD vs. CMOS Technology
 Most modern digital cameras use one of two competing sensor array technologies:
@@ -255,7 +255,7 @@ Most modern digital cameras use one of two competing sensor array technologies:
 | **Size** | Generally larger system footprint. | Can be significantly smaller. |
 | **Maturity** | More mature technology with high quality. | Integrated with fewer components. |
 
-![CCD vs CMOS](assets/ccd%20vs%20cmos%20image%20sensor.png)
+<img src="assets/ccd%20vs%20cmos%20image%20sensor.png" width="100%" style="height:auto;">
 
 ### Sampling and Quantization
 To process the continuous image $f(x,y)$ on a computer, it must be digitized:
@@ -283,7 +283,7 @@ f(M-1,0) & f(M-1,1) & \cdots & f(M-1,N-1)
 $b = M \times N \times k$
     *   An image with $2^8 = 256$ intensity values is called an **8-bit image**.
 
-![Storage Bits](assets/Storage%20bits%20for%20Various%20Values%20of%20N%20and%20K.png)
+<img src="assets/Storage%20bits%20for%20Various%20Values%20of%20N%20and%20K.png" width="100%" style="height:auto;">
 
 ### Resolution
 *   **Spatial Resolution**: The smallest discernible detail in an image, measured in line pairs per unit distance or dots per inch (dpi).
@@ -466,7 +466,7 @@ The simplest spatial domain operations where transformation $T$ depends only on 
     *   **$\gamma = 1$**: Identity transformation.
     *   **Application (Gamma Correction)**: Correcting the power-law response of display devices (e.g., CRT monitors) to ensure images appear naturally to the human eye.
 
-![Gamma Correction](assets/gamma%20correction.png)
+<img src="assets/gamma%20correction.png" width="100%" style="height:auto;">
 
 ---
 
@@ -477,7 +477,7 @@ Transformations made of linear segments connected at specific points, allowing s
 1.  **Contrast Stretching**: Expands the range of intensity levels in a low-contrast image to span the full scale (black to white).
     *   **Thresholding**: An extreme case where the function becomes a vertical line, converting a grayscale image to binary (black and white).
 
-![Contrast Stretching](assets/contrast%20streching.png)
+<img src="assets/contrast%20streching.png" width="100%" style="height:auto;">
 2.  **Intensity-Level Slicing**: Highlights a specific range of gray levels $[A, B]$.
     *   **Binary Slicing**: Sets pixels in range to white, others to black.
     *   **Non-destructive**: Highlights range but preserves other gray levels.
@@ -486,8 +486,8 @@ Transformations made of linear segments connected at specific points, allowing s
     *   **Bit-Plane 1 (LSB)**: Contains fine detail/noise.
     *   **Applications**: Image reconstruction (compression) and data hiding (watermarking).
 
-![Bit Plane Slicing Example](assets/bit%20plane%20slicing%20-%20example.png)
-![Bit Plane Slicing Working](assets/bit%20plane%20slicing%20-%20working.png)
+<img src="assets/bit%20plane%20slicing%20-%20example.png" width="100%" style="height:auto;">
+<img src="assets/bit%20plane%20slicing%20-%20working.png" width="100%" style="height:auto;">
 
 ---
 
@@ -501,8 +501,8 @@ Analysis based on the statistical distribution of pixel intensities. A **histogr
 *   **Low-Contrast**: Narrow, centered distribution ("gray" look).
 *   **High-Contrast**: Broad, uniform distribution covering the full scale.
 
-![Image Histogram](assets/image%20histogram.png)
-![Histogram Processing](assets/histogram%20processing.png)
+<img src="assets/image%20histogram.png" width="100%" style="height:auto;">
+<img src="assets/histogram%20processing.png" width="100%" style="height:auto;">
 
 ### Techniques
 1.  **Histogram Equalization**: An automatic method to "stretch" the histogram to be uniform.
@@ -576,8 +576,8 @@ $g(x,y) = \sum_{s=-a}^{a} \sum_{t=-b}^{b} w(s,t)f(x+s, y+t)$
 *   **Correlation**: Sliding the mask and calculating the sum of products.
 *   **Convolution**: Rotating the filter by 180° *before* sliding. (Same result if filter is symmetric).
 
-![Correlation](assets/correlation%20of%202d%20filter.png)
-![Convolution](assets/CONVOLUTION%20of%202d%20filter.png)
+<img src="assets/correlation%20of%202d%20filter.png" width="100%" style="height:auto;">
+<img src="assets/CONVOLUTION%20of%202d%20filter.png" width="100%" style="height:auto;">
 
 ### Edge Handling
 When filters hang off the image edge:
