@@ -269,12 +269,13 @@ After sampling and quantization, the image is represented as a discrete 2-D arra
 
 ### Matrix Representation
 For computational efficiency, we write the image as a matrix:
-$f(x,y) = \begin{bmatrix}
-f(0,0) & f(0,1) & \cdots & f(0,N-1) \\\
-f(1,0) & f(1,1) & \cdots & f(1,N-1) \\\
-\vdots & \vdots & \ddots & \vdots \\\
+
+$$f(x,y) = \begin{bmatrix}
+f(0,0) & f(0,1) & \cdots & f(0,N-1) \\
+f(1,0) & f(1,1) & \cdots & f(1,N-1) \\
+\vdots & \vdots & \ddots & \vdots \\
 f(M-1,0) & f(M-1,1) & \cdots & f(M-1,N-1)
-\end{bmatrix}$
+\end{bmatrix}$$
 
 ### Intensity Levels and Storage
 *   The number of discrete intensity levels, $L$, is typically a power of 2: $L = 2^k$.
@@ -322,13 +323,10 @@ Two pixels are adjacent if they are neighbors and their intensity levels satisfy
     *   They are diagonally adjacent AND their 4-neighbor sets do not intersect.
 
 ### Distance Function
-A **distance function** is a function of two points, \( p \) and \( q \), in space that satisfies three criteria:
-1. **Non-negativity**  
-   \( D(p, q) \geq 0 \)
-2. **Symmetry**  
-   \( D(p, q) = D(q, p) \)
-3. **Triangle Inequality**  
-   \( D(p, z) \leq D(p, q) + D(q, z) \)
+A **distance function** is a function of two points, $p$ and $q$, in space that satisfies three criteria:
+1. **Non-negativity**: $D(p, q) \geq 0$
+2. **Symmetry**: $D(p, q) = D(q, p)$
+3. **Triangle Inequality**: $D(p, z) \leq D(p, q) + D(q, z)$
 
 ### Distance Measures
 For pixels $p(x,y)$ and $q(s,t)$:
