@@ -311,10 +311,10 @@ Interpolation is the process of using known data to **estimate values at unknown
 ## 7. Relationships Between Pixels
 To develop algorithms, we define how pixels relate to one another.
 
-### Neighbors of a Pixel $p(x,y)$
-1.  **4-neighbors ($N_4(p)$)**: Horizontal and vertical neighbors: $(x+1,y), (x-1,y), (x,y+1), (x,y-1)$.
-2.  **Diagonal neighbors ($N_D(p)$)**: The four diagonal neighbors: $(x+1,y+1), (x+1,y-1), (x-1,y+1), (x-1,y-1)$.
-3.  **8-neighbors ($N_8(p)$)**: The union of $N_4(p)$ and $N_D(p)$.
+### Neighbors of a Pixel p(x,y)
+1.  **4-neighbors** ($N_4(p)$): Horizontal and vertical neighbors: $(x+1,y),\ (x-1,y),\ (x,y+1),\ (x,y-1)$.
+2.  **Diagonal neighbors** ($N_D(p)$): The four diagonal neighbors: $(x+1,y+1),\ (x+1,y-1),\ (x-1,y+1),\ (x-1,y-1)$.
+3.  **8-neighbors** ($N_8(p)$): The union of $N_4(p)$ and $N_D(p)$.
 
 ### Adjacency
 Two pixels are adjacent if they are neighbors and their intensity levels satisfy a specific similarity criterion.
@@ -404,12 +404,15 @@ For a standard RGB image, $n=3$, where $z_1, z_2, z_3$ correspond to the Red, Gr
 Vector norms are used to measure the "distance" or similarity between two pixel vectors. This is critical for **color matching**, **object recognition**, and **segmentation**.
 
 *   **Euclidean Distance ($D_E$)**: To determine how similar a pixel $\mathbf{z}$ is to a reference color vector $\mathbf{a}$:
-    $$ D(\mathbf{z}, \mathbf{a}) = || \mathbf{z} - \mathbf{a} || = \sqrt{(\mathbf{z} - \mathbf{a})^T (\mathbf{z} - \mathbf{a})} = \sqrt{\sum_{i=1}^n (z_i - a_i)^2} $$
-    *   *Application*: All pixels $\mathbf{z}$ where $D(\mathbf{z}, \mathbf{a}) < T$ (a threshold) can be classified as belonging to the object defined by color $\mathbf{a}$.
+
+$$D(\mathbf{z}, \mathbf{a}) = ||\mathbf{z} - \mathbf{a}|| = \sqrt{(\mathbf{z} - \mathbf{a})^T (\mathbf{z} - \mathbf{a})} = \sqrt{\sum_{i=1}^n (z_i - a_i)^2}$$
+
+*   *Application*: All pixels $\mathbf{z}$ where $D(\mathbf{z}, \mathbf{a}) < T$ (a threshold) can be classified as belonging to the object defined by color $\mathbf{a}$.
 
 ### 12.3 Linear Transformations
 Pixel vectors can be transformed linearly to new coordinate spaces (e.g., converting RGB to YCbCr components).
-$$ \mathbf{w} = \mathbf{A}(\mathbf{z} - \mathbf{a}) $$
+
+$$\mathbf{w} = \mathbf{A}(\mathbf{z} - \mathbf{a})$$
 Where $\mathbf{A}$ is an $n \times n$ matrix and $\mathbf{a}$ is an average vector.
 *   **Principal Component Analysis (PCA)**: Also known as the **Hotelling Transform**, this technique uses the covariance matrix of the pixel vectors to align the data along the directions of maximum variance (eigenvectors). It is widely used for **data compression** and **feature extraction** (e.g., Eigenfaces).
 
@@ -475,15 +478,16 @@ Transformations made of linear segments connected at specific points, allowing s
 1.  **Contrast Stretching**: Expands the range of intensity levels in a low-contrast image to span the full scale (black to white).
     *   **Thresholding**: An extreme case where the function becomes a vertical line, converting a grayscale image to binary (black and white).
 
-<img src="assets/contrast%20streching.png" width="100%" style="height:auto;">
 2.  **Intensity-Level Slicing**: Highlights a specific range of gray levels $[A, B]$.
     *   **Binary Slicing**: Sets pixels in range to white, others to black.
     *   **Non-destructive**: Highlights range but preserves other gray levels.
+
 3.  **Bit-Plane Slicing**: analyzing an 8-bit image as 8 separate "bit-planes".
     *   **Bit-Plane 8 (MSB)**: Contains structural information.
     *   **Bit-Plane 1 (LSB)**: Contains fine detail/noise.
     *   **Applications**: Image reconstruction (compression) and data hiding (watermarking).
 
+<img src="assets/contrast%20streching.png" width="100%" style="height:auto;">
 <img src="assets/bit%20plane%20slicing%20-%20example.png" width="100%" style="height:auto;">
 <img src="assets/bit%20plane%20slicing%20-%20working.png" width="100%" style="height:auto;">
 
