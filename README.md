@@ -5,6 +5,8 @@ Notes based on **Chapter 2** of Gonzalez and Woods: *Digital Image Fundamentals*
 
 Digital Image Processing (DIP) involves several stages to convert an image into a form suitable for specific applications. The workflow typically follows this hierarchy:
 
+![Fundamental Steps in Digital Image Processing](assets/fundamental-steps.png)
+
 1.  **Image Acquisition**: The first step is capturing the image using a sensor (e.g., a camera). It involves digitizing a continuous signal into a discrete format.
 2.  **Image Enhancement**: The process of manipulating an image so that the result is *more suitable* than the original for a specific application (e.g., adjusting contrast or brightness).
 3.  **Image Restoration**: Unlike enhancement, which is subjective, restoration is **objective** and aims to improve an image based on mathematical or probabilistic models of image degradation (e.g., removing blur or noise).
@@ -18,6 +20,9 @@ Digital Image Processing (DIP) involves several stages to convert an image into 
 
 ### The Image Processing System
 To perform these tasks, a specialized "general purpose" system is required, consisting of:
+
+![The Image Processing System](assets/dip-system.png)
+
 *   **Image Sensors**: These sit at the front, interacting with the "Problem Domain" to capture light or energy.
 *   **Specialized Hardware**: Often dedicated boards for high-speed processing.
 *   **Computer & Software**: The brain and the instructions that run the algorithms.
@@ -25,6 +30,109 @@ To perform these tasks, a specialized "general purpose" system is required, cons
 *   **Output**: This includes image displays for viewing and hardcopy devices (printers) for physical results.
 
 ---
+
+# Imaging Notes
+
+## 1. Gamma Ray Imaging
+
+### Applications
+- **Nuclear Medicine** and **astronomical observations**
+
+### Principle (Nuclear Medicine)
+A patient is injected with a radioactive isotope that emits gamma rays as it decays. Images are produced from the emissions collected by a gamma ray detector.
+
+---
+
+### Positron Emission Tomography (PET)
+
+- The principle is similar to X-ray tomography.
+- The patient is given a radioactive isotope that **emits positrons** as it decays.
+- When a positron meets an electron, **both are annihilated** and **two gamma rays** are emitted in opposite directions.
+- These gamma rays are detected and used to construct a **tomographic image**.
+- The collected gamma rays are used to construct a **CT (Computed Tomography)** image.
+
+**Example Image:** Bone Scan
+- A radioactive isotope is injected; as it decays it emits positrons.
+- Positron-electron annihilation generates two gamma rays that are detected to form the image.
+
+---
+
+### Astronomical Application – Cygnus Loop
+
+- A star in the **constellation of Cygnus** exploded approximately **15,000 years ago**.
+- This explosion generated a **superheated stationary gas cloud** known as the **Cygnus Loop**.
+- The Cygnus Loop is located **15,000 light-years from Earth**.
+- It serves as a **natural gamma ray source** used in astronomical gamma ray imaging.
+
+---
+
+### Summary of Gamma Ray Imaging Examples (Figure 1.6)
+| Image | Description |
+|-------|-------------|
+| (a) Bone Scan | Full-body gamma ray scan of the skeletal system |
+| (b) PET Image | Tomographic image constructed from detected gamma rays |
+| (c) Cygnus Loop | Astronomical gamma ray image of a supernova remnant |
+| (d) Reactor Valve | Gamma radiation (bright spot) from a reactor valve |
+
+---
+
+## 2. X-Ray Imaging
+
+### Overview
+- X-rays are among the **oldest sources of electromagnetic (EM) radiation** used for imaging.
+
+### Applications
+- Medical diagnostics
+- Astronomy
+- Industry (e.g., circuit board inspection)
+
+### Principle
+
+1. X-rays are generated using an **X-ray tube** — a vacuum tube containing a **cathode** and an **anode**.
+2. The cathode is **heated**, causing the release of **free electrons**.
+3. These high-speed electrons **strike a nucleus**, releasing energy in the form of **X-ray radiation** (Bremsstrahlung radiation).
+4. The energy of the X-ray is controlled by the **current applied to the filament** in the cathode.
+5. A **film or digital sensor** collects the transmitted rays to form the image.
+
+### Special Technique – Angiography
+- A **contrast medium** (dye) is injected into the body to enhance visibility of blood vessels.
+
+---
+
+### Summary of X-Ray Imaging Examples (Figure 1.7)
+| Image | Description |
+|-------|-------------|
+| (a) Chest X-ray | Standard thoracic X-ray for medical diagnosis |
+| (b) Aortic Angiogram | X-ray of blood vessels using contrast medium |
+| (c) Head CT | Cross-sectional computed tomography of the head |
+| (d) Circuit Boards | Industrial X-ray imaging of electronic components |
+| (e) Cygnus Loop | Astronomical X-ray image from NASA |
+
+---
+
+## 3. Ultraviolet (UV) Imaging
+
+### Principle
+- UV imaging uses **ultraviolet light** to excite molecules in a sample.
+- The excited molecules emit **visible radiation** through a process called **fluorescence**.
+- This fluorescence is then captured to form the image.
+
+### Application – Microphotography
+- UV imaging is used in **microphotography** to distinguish between:
+  - **Normal corn**
+  - **Corn infected by parasites**
+- The difference in fluorescence between healthy and infected tissue makes parasitic infection clearly visible.
+
+---
+
+## Key Comparisons
+
+| Imaging Type | Source | Primary Use | Key Feature |
+|---|---|---|---|
+| Gamma Ray | Radioactive isotopes / natural sources | Nuclear medicine, astronomy | Detects gamma rays from annihilation or decay |
+| PET | Positron-emitting isotopes | Medical tomography | Constructs 3D CT images from gamma ray pairs |
+| X-Ray | X-ray tube (electron-nucleus collision) | Medical, industrial, astronomy | Transmitted rays captured on film/sensor |
+| Ultraviolet | UV light source | Microscopy, biology | Uses fluorescence to reveal details |
 
 ## 2. Elements of Visual Perception: The Human Eye
 Why study the eye in a computer science context? Because the goal is often to create images for humans to view. We need to understand the "receiver" of the data.
@@ -106,6 +214,7 @@ The portion of the spectrum that humans can actually see spans from approximatel
 
 ![EM Spectrum](assets/em%20spectrum.png)
 ![Visible Light](assets/visible%20light.png)
+![Applications](assets/visible-infrared.png)
 
 ### Key Light Properties
 *   **Monochromatic (Achromatic) Light**: Light "void of color," having only one attribute: **intensity** or gray level. The range of these measured values is called the **gray scale**.
