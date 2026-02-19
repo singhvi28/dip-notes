@@ -286,10 +286,56 @@ $b = M \times N \times k$
 
 <img src="assets/Storage%20bits%20for%20Various%20Values%20of%20N%20and%20K.png" width="100%" style="height:auto;">
 
-### Resolution
-*   **Spatial Resolution**: The smallest discernible detail in an image, measured in line pairs per unit distance or dots per inch (dpi).
-*   **Intensity Resolution**: The smallest discernible change in intensity level.
-*   **False Contouring**: A visual artifact in smooth areas caused by insufficient intensity levels (quantization noise).
+### Resolution and Artifacts
+
+#### 1. Spatial Resolution
+Spatial resolution refers to the smallest discernible detail in an image. It is fundamentally determined by the number of pixels used to represent the scene ($M \times N$).
+
+**Advantages of High Spatial Resolution:**
+*   **High Fidelity:** Captures fine details, textures, and sharp edges, making it essential for analytical tasks.
+*   **Better Scaling:** High-resolution images can be enlarged or zoomed without becoming "pixelated" or blurry.
+
+**Disadvantages of High Spatial Resolution:**
+*   **Storage Requirements:** Increasing the number of pixels significantly increases the file size (e.g., doubling dimensions quadruples the storage).
+*   **Computational Cost:** More pixels require more processing power and time for filtering, enhancement, and analysis.
+
+**Applications:**
+*   **Medical Imaging:** Critical for identifying small tumors in X-rays or Gamma-ray scans.
+*   **Satellite Remote Sensing:** Used for identifying specific geographical features, vehicles, or buildings from space.
+*   **Document Scanning:** High DPI ensures that small text and intricate logos remain legible.
+
+#### 2. Intensity (Radiometric) Resolution
+Intensity resolution refers to the smallest discernible change in gray level. It is determined by the number of bits ($k$) used to represent each pixel, yielding $L = 2^k$ levels.
+
+**Advantages of High Intensity Resolution:**
+*   **Smooth Gradients:** Allows for subtle transitions between colors or gray levels, preventing visual artifacts.
+*   **Increased Information:** Essential for scientific applications where small variations in intensity represent physical data (e.g., temperature or density).
+
+**Disadvantages of High Intensity Resolution:**
+*   **Bit Depth Overhead:** Using 16-bit depth instead of 8-bit doubles the storage for the same number of pixels.
+*   **Display Constraints:** Most standard monitors only support 8-bit or 10-bit color, so extremely high intensity resolution may not be visually perceivable without specialized hardware.
+
+**Applications:**
+*   **Night Vision Imaging:** High sensitivity to small intensity changes is vital for seeing objects in low-light environments.
+*   **Astronomical Imaging:** Detecting the faint light of distant stars against a dark background requires high bit depth.
+*   **Professional Photography (RAW format):** Photographers use 12-bit or 14-bit depth to allow for greater flexibility in post-processing.
+
+#### 3. False Contouring
+False contouring is a visual artifact that occurs when the intensity resolution is too low to represent smooth transitions in an image.
+
+**Mechanism:** When there are insufficient gray levels, a smooth gradient is forced into a few discrete steps. The human eye perceives these discrete steps as "stair-case" bands or artificial contours that were not present in the original scene.
+
+**Advantages (Context-Specific):**
+*   In specific artistic contexts, "posterization" (intentional false contouring) can be used for stylistic effect.
+*   Reduced bit depth can be used intentionally to compress data in non-critical applications where visual perfection is not required.
+
+**Disadvantages:**
+*   **Visual Distraction:** It creates unnatural lines in smooth areas like skies or skin tones.
+*   **Loss of Subtle Information:** Important details hidden within a gradient may be merged into a single "contour," losing critical data.
+
+**Applications/Mitigation:**
+*   **Dithering:** A technique used in image processing to minimize the visibility of false contouring by adding noise to the image, which tricks the eye into seeing smoother transitions.
+*   **Medical Diagnostics:** It is critical to avoid false contouring in medical scans, as an artifact could be mistaken for a physical boundary or tissue abnormality.
 
 ---
 
@@ -317,10 +363,50 @@ To develop algorithms, we define how pixels relate to one another.
 3.  **8-neighbors** $N_8(p)$: The union of $N_4(p)$ and $N_D(p)$.
 
 ### Adjacency
-Two pixels are adjacent if they are neighbors and their intensity levels satisfy a specific similarity criterion.
-*   **m-adjacency (mixed adjacency)**: A specialized type used to eliminate **multiple-path ambiguities** found in 8-adjacency. Two pixels $p$ and $q$ are m-adjacent if:
-    *   They are 4-adjacent, OR
-    *   They are diagonally adjacent AND their 4-neighbor sets do not intersect.
+Adjacency determines which pixels are considered neighbors of a given pixel.
+Assume a pixel $p$ at coordinates $(x, y)$.
+
+**(a) 4-Adjacency ($N_4$)**
+A pixel has four neighbors:
+*   $(x - 1, y) \rightarrow$ left
+*   $(x + 1, y) \rightarrow$ right
+*   $(x, y - 1) \rightarrow$ up
+*   $(x, y + 1) \rightarrow$ down
+
+Only horizontal and vertical neighbors are considered.
+*   ✔ Used when diagonal connections should NOT count.
+*   ✔ Produces simpler connectivity structures.
+
+**(b) 8-Adjacency ($N_8$)**
+Includes 4-neighbors plus diagonal neighbors:
+*   $(x - 1, y - 1)$
+*   $(x - 1, y + 1)$
+*   $(x + 1, y - 1)$
+*   $(x + 1, y + 1)$
+
+So total = 8 neighbors.
+*   ✔ Allows diagonal connections.
+*   ✔ Produces thicker connected regions.
+
+**(c) m-Adjacency (Mixed Adjacency)**
+Used to avoid ambiguity in connectivity.
+Two pixels are m-adjacent if:
+1.  They are 4-adjacent, **OR**
+2.  They are diagonal neighbors and do not share a common 4-neighbor that belongs to the same set.
+
+*   ✔ Prevents double connections.
+*   ✔ Often used in digital topology.
+
+### Connectivity
+Connectivity determines whether two pixels belong to the same region.
+Two pixels are connected if:
+1.  They are adjacent (4, 8, or m), **AND**
+2.  Their intensity values belong to the same set (e.g., both are foreground pixels).
+
+**Types of Connectivity**
+*   **4-Connectivity**: A region is 4-connected if you can move between any two pixels using only 4-adjacent steps.
+*   **8-Connectivity**: A region is 8-connected if movement through diagonal pixels is allowed.
+*   **m-Connectivity**: Avoids connectivity paradoxes when diagonal pixels touch at corners.
 
 ### Distance Function
 A **distance function** is a function of two points, $p$ and $q$, in space that satisfies three criteria:
