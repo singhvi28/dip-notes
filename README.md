@@ -840,9 +840,59 @@ Sharpening using a blurred mask.
 
 ### 3. The Gradient (First-Order Derivative)
 Points in the direction of the greatest rate of change. We typically use the **Gradient Magnitude**:
-$M(x,y) \approx |g_x| + |g_y|$
-*   **Roberts Cross-Gradient**: Uses $2 \times 2$ masks.
-*   **Sobel Operators**: Uses $3 \times 3$ masks (provides smoothing + derivative).
+$$M(x,y) \approx |G_x| + |G_y|$$
+
+#### Roberts Cross-Gradient
+*   Uses $2 \times 2$ masks.
+*   Simple but sensitive to noise.
+
+#### Sobel Operator
+The **Sobel operator** is a widely used edge detection technique in image processing. It detects edges by calculating the gradient (rate of intensity change) of an image.
+
+It is especially useful for:
+*   Edge detection
+*   Feature extraction
+*   Image segmentation
+*   Computer vision preprocessing
+
+**How Sobel Works**
+The Sobel operator applies **two $3 \times 3$ convolution kernels** to an image:
+*   One for detecting horizontal changes (**$G_x$**)
+*   One for detecting vertical changes (**$G_y$**)
+
+**Sobel Kernels**
+
+$$G_x = \begin{bmatrix} -1 & 0 & +1 \\ -2 & 0 & +2 \\ -1 & 0 & +1 \end{bmatrix}$$
+
+$$G_y = \begin{bmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ +1 & +2 & +1 \end{bmatrix}$$
+
+*   **$G_x$** detects vertical edges
+*   **$G_y$** detects horizontal edges
+
+**Step-by-Step Process**
+1.  **Convert to Grayscale**: Sobel works on single-channel (grayscale) images.
+2.  **Convolution**: Apply both $G_x$ and $G_y$ kernels to the image.
+3.  **Gradient Magnitude**: Compute edge strength:
+    $$G = \sqrt{G_x^2 + G_y^2}$$
+    Often approximated as:
+    $$G = |G_x| + |G_y|$$
+4.  **Gradient Direction (Optional)**:
+    $$\theta = \tan^{-1}\left(\frac{G_y}{G_x}\right)$$
+    This gives the direction of edges.
+
+**Why Sobel is Popular**
+*   ✅ Simple and fast
+*   ✅ Reduces noise slightly (due to smoothing effect)
+*   ✅ Good for real-time systems
+*   ✅ Easy to implement
+
+**Sobel vs Other Edge Detectors**
+
+| Operator | Noise Sensitivity | Complexity | Edge Quality |
+| -------- | ----------------- | ---------- | ------------ |
+| Sobel    | Moderate          | Low        | Good         |
+| Prewitt  | Higher            | Low        | Moderate     |
+| Canny    | Low               | Higher     | Excellent    |
 
 ---
 
