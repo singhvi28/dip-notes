@@ -706,9 +706,79 @@ A pixel's new value is determined by its neighboring pixels using a **Filter** (
 A weighted average of the neighborhood (sum-of-products):
 $g(x,y) = \sum_{s=-a}^{a} \sum_{t=-b}^{b} w(s,t)f(x+s, y+t)$
 
-### Correlation vs. Convolution
-*   **Correlation**: Sliding the mask and calculating the sum of products.
-*   **Convolution**: Rotating the filter by 180° *before* sliding. (Same result if filter is symmetric).
+### Spatial Correlation vs. Convolution (in Image Processing)
+
+Both **spatial correlation** and **convolution** are operations used in signal and image processing to apply a filter (kernel) to data. They are very similar mathematically, but differ in one key step.
+
+---
+
+#### 1️⃣ Spatial Correlation
+
+**Definition:**
+Spatial correlation slides a kernel over an image and computes the sum of element-wise multiplications **without flipping the kernel**.
+
+**Formula (2D case):**
+
+$$g(x, y) = \sum_{i}\sum_{j} f(x+i, y+j) h(i, j)$$
+
+* $f(x,y)$ = input image
+* $h(i,j)$ = kernel
+* $g(x,y)$ = output image
+
+**Key Characteristics:**
+
+* No flipping of the kernel.
+* Often used for **template matching** and **feature detection**.
+* If the kernel matches a pattern in the image, the output value is high.
+
+**Example uses:**
+
+* Edge detection
+* Pattern recognition
+* Template matching
+
+---
+
+#### 2️⃣ Convolution
+
+**Definition:**
+Convolution is similar to correlation, but the kernel is flipped both horizontally and vertically before sliding.
+
+**Formula (2D case):**
+
+$$g(x, y) = \sum_{i}\sum_{j} f(x-i, y-j) h(i, j)$$
+
+This is equivalent to:
+
+$$g(x, y) = \sum_{i}\sum_{j} f(x+i, y+j) h(-i, -j)$$
+
+**Key Characteristics:**
+
+* Kernel is flipped (rotated 180° in 2D).
+* Fundamental operation in:
+  * Linear systems
+  * Filtering
+  * Deep learning (CNNs)
+
+---
+
+#### 🔎 Main Difference
+
+| Feature                 | Correlation                                       | Convolution                  |
+| ----------------------- | ------------------------------------------------- | ---------------------------- |
+| Kernel Flipping         | ❌ No                                              | ✅ Yes (180° rotation)        |
+| Mathematical Properties | Not commutative                                   | Commutative                  |
+| Used in CNNs            | Often called convolution but actually correlation | True convolution (in theory) |
+
+---
+
+#### 🎯 Important Note (Deep Learning)
+
+In **Convolutional Neural Networks (CNNs)**, such as those introduced by Yann LeCun, the operation commonly called "convolution" is technically **cross-correlation** (no kernel flipping).
+
+However, since the kernel is learned during training, the distinction does not affect performance. So libraries implement cross-correlation because it's slightly computationally efficient.
+
+> If the kernel is symmetric (e.g., Gaussian blur), flipping makes no difference — both operations produce the same result.
 
 <img src="assets/correlation%20of%202d%20filter.png" width="100%" style="height:auto;">
 <img src="assets/CONVOLUTION%20of%202d%20filter.png" width="100%" style="height:auto;">
