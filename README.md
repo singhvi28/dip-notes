@@ -467,6 +467,24 @@ The simplest spatial domain operations where transformation $T$ depends only on 
     *   **$\gamma = 1$**: Identity transformation.
     *   **Application (Gamma Correction)**: Correcting the power-law response of display devices (e.g., CRT monitors) to ensure images appear naturally to the human eye.
 
+        **Gamma Correction Overview**
+        Gamma correction is a nonlinear operation used in image processing to adjust the brightness and contrast of an image in a way that better matches human visual perception and display characteristics.
+
+        **Why Gamma Correction Is Needed**
+        
+        *   Human eyes perceive brightness nonlinearly (we’re more sensitive to changes in dark tones than bright ones).
+        *   Cameras and displays also respond nonlinearly to light.
+        *   Without gamma correction, images may look too dark, washed out, or lose detail in shadows or highlights.
+        *   Gamma correction bridges the gap between:
+            *   Physical light intensity
+            *   Digital pixel values
+            *   Human perception
+
+        **Common Use Cases**
+
+        *   Display systems (most monitors use $\gamma \approx 2.2$)
+        *   Image enhancement (revealing shadow details)
+
 <img src="assets/gamma%20correction.png" width="100%" style="height:auto;">
 
 ---
