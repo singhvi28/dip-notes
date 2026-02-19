@@ -176,10 +176,38 @@ The Human Visual System (HVS) is incredibly flexible. It can adapt to an enormou
 
 <img src="assets/brightness%20adaptation%20and%20discrimination%20graph.png" width="100%" style="height:auto;">
 
-#### The Weber Ratio
-To measure how well the eye can detect changes in light, researchers use the **Weber Ratio** ($\Delta I_c / I$), where $\Delta I_c$ is the increment of illumination discriminable 50% of the time against a background $I$.
-*   **Small Weber Ratio**: Means **good** brightness discrimination; a small percentage change in intensity is easily noticed (occurs at high illumination/cones).
-*   **Large Weber Ratio**: Means **poor** brightness discrimination; a large percentage change is required before the eye notices a difference (occurs at low illumination/rods).
+#### The Weber Ratio Experiment
+The objective of this experiment is to determine the **just noticeable difference (JND)** in light intensity that a human eye can perceive against a specific background. This helps in understanding why we see "false contouring" in digital images with low bit depths.
+
+**1. Experimental Setup**
+The experiment typically involves a controlled environment to isolate the variables of light intensity:
+*   **The Stimulus**: A subject is presented with a uniform background of constant intensity, denoted as $I$.
+*   **The Increment**: At the center of this background, a short-duration flash or a solid circular disk of a slightly different intensity, $I + \Delta I$, is introduced.
+*   **The Subject**: The person performing the test is asked to indicate whether they can perceive the central disk against the background.
+
+**2. The Procedure**
+The experiment is repeated across a wide range of background intensities ($I$):
+*   **Fixed Background**: Start with a very low background intensity $I$.
+*   **Incremental Adjustment**: Gradually increase the central intensity $\Delta I$ from zero until the subject reports seeing the disk 50% of the time (the threshold of perception).
+*   **Recording the JND**: This specific value is recorded as $\Delta I_c$, the "just noticeable" increment.
+*   **Repeat**: The background $I$ is increased to a higher level, and the process is repeated to find the new $\Delta I_c$.
+
+**3. Calculating the Weber Ratio**
+The results are expressed as a ratio, known as the Weber Ratio:
+
+$$\text{Weber Ratio} = \frac{\Delta I_c}{I}$$
+
+**Significance of the Magnitude**
+The magnitude of the Weber ratio tells us how "sensitive" our eyes are at different light levels:
+
+| Magnitude | Interpretation | Visual Significance |
+| :--- | :--- | :--- |
+| **Small Ratio** | **High Sensitivity**: A very small change in intensity is easily noticed. | Occurs at high intensities. The eye is excellent at discriminating subtle shades. |
+| **Large Ratio** | **Low Sensitivity**: A large change in intensity is required for the eye to notice it. | Occurs at very low intensities (scotopic vision). This is why "noise" is more visible in dark areas of a photo. |
+
+**Why it matters in Digital Image Processing**
+*   **Bit Depth Selection**: Since our sensitivity changes with intensity, we often use non-linear quantization (like Log or Power-Law transformations) to give more bits to the ranges where the Weber ratio is smallest (where we are most sensitive).
+*   **False Contouring**: If the gap between two digital gray levels is larger than the $\Delta I_c$ for that background intensity, the human eye will perceive a "step" or a line instead of a smooth gradient, leading to false contouring.
 
 **Crucial Observation**: In a typical monochrome image, a person can typically see only about **1 to 2 dozen different intensities** at any single point in time.
 
