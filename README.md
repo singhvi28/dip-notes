@@ -610,16 +610,19 @@ Transformations made of linear segments connected at specific points, allowing s
 1.  **Contrast Stretching**: Expands the range of intensity levels in a low-contrast image to span the full scale (black to white).
     *   **Thresholding**: An extreme case where the function becomes a vertical line, converting a grayscale image to binary (black and white).
 
-2.  **Intensity-Level Slicing**: Highlights a specific range of gray levels $[A, B]$.
+![Contrast Stretching](contrast-streching.png)
+
+2.  **Intensity-Level Slicing**: Highlights a specific range of gray levels $[A, B]$. Some applications include enhancing features in satellite imagery, such as masses of water, and enhancing flaws in X-ray images.
     *   **Binary Slicing**: Sets pixels in range to white, others to black.
     *   **Non-destructive**: Highlights range but preserves other gray levels.
+
+![Intensity-Level Slicing](intensity-level-slicing.png)
 
 3.  **Bit-Plane Slicing**: analyzing an 8-bit image as 8 separate "bit-planes".
     *   **Bit-Plane 8 (MSB)**: Contains structural information.
     *   **Bit-Plane 1 (LSB)**: Contains fine detail/noise.
     *   **Applications**: Image reconstruction (compression) and data hiding (watermarking).
 
-<img src="assets/contrast%20streching.png" width="100%" style="height:auto;">
 <img src="assets/bit%20plane%20slicing%20-%20example.png" width="100%" style="height:auto;">
 <img src="assets/bit%20plane%20slicing%20-%20working.png" width="100%" style="height:auto;">
 
